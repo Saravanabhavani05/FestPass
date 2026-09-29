@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FestPass - Dashboard</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#080b14;
+    color:#ffffff;
+}
+
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:245px;
+    height:100vh;
+    position:fixed;
+    left:0;
+    top:0;
+    background:#0d111d;
+    border-right:1px solid #20283a;
+    padding:28px 18px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:42px;
+    padding:0 10px;
+}
+
+.logo-box{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#6846ff,#a66cff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.logo h1{
+    font-size:21px;
+}
+
+.logo p{
+    color:#707a90;
+    font-size:9px;
+    margin-top:3px;
+}
+
+.menu-title{
+    color:#596378;
+    font-size:10px;
+    font-weight:bold;
+    letter-spacing:1px;
+    margin:0 12px 12px;
+}
+
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.nav a{
+    text-decoration:none;
+    color:#8992a7;
+    padding:12px 14px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    gap:13px;
+    font-size:13px;
+}
+
+.nav a:hover{
+    background:#171d2c;
+    color:white;
+}
+
+.nav a.active{
+    background:linear-gradient(90deg,#282044,#181c2c);
+    color:#aa8cff;
+    border:1px solid #3b3068;
+}
+
+.icon{
+    width:20px;
+    text-align:center;
+    font-size:16px;
+}
+
+/* SIDEBAR BOTTOM */
+
+.sidebar-bottom{
+    position:absolute;
+    left:18px;
+    right:18px;
+    bottom:24px;
+}
+
+.admin-box{
+    background:#111827;
+    border:1px solid #252e42;
+    border-radius:12px;
+    padding:13px;
+    margin-bottom:10px;
+}
+
+.admin-box strong{
+    font-size:12px;
+}
+
+.admin-box p{
+    color:#68748a;
+    font-size:10px;
+    margin-top:4px;
+}
+
+.logout{
+    color:#7c869b;
+    text-decoration:none;
+    font-size:12px;
+    display:flex;
+    gap:10px;
+    padding:10px 12px;
+    border-radius:9px;
+}
+
+.logout:hover{
+    background:#171d2c;
+    color:white;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:245px;
+    width:calc(100% - 245px);
+    padding:34px 42px;
+}
+
+/* HEADER */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:32px;
+}
+
+.heading h2{
+    font-size:28px;
+}
+
+.heading p{
+    color:#707b91;
+    font-size:13px;
+    margin-top:6px;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#7354ff,#a86cff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+.profile-text strong{
+    display:block;
+    font-size:12px;
+}
+
+.profile-text span{
+    display:block;
+    color:#68748a;
+    font-size:10px;
+    margin-top:3px;
+}
+
+/* STATS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.card{
+    background:#101522;
+    border:1px solid #20283a;
+    border-radius:15px;
+    padding:20px;
+}
+
+.stat-card{
+    min-height:125px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.stat-info p{
+    color:#727d92;
+    font-size:10px;
+    margin-bottom:9px;
+}
+
+.stat-info h3{
+    font-size:28px;
+}
+
+.stat-icon{
+    width:45px;
+    height:45px;
+    border-radius:12px;
+    background:#1d1935;
+    color:#a78aff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+/* SECTION */
+
+.section{
+    margin-top:30px;
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+}
+
+.section-head h3{
+    font-size:16px;
+}
+
+.section-head p{
+    color:#68748a;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.view{
+    color:#a487ff;
+    text-decoration:none;
+    font-size:11px;
+}
+
+/* ACTIONS */
+
+.actions{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.action{
+    text-decoration:none;
+    color:white;
+    background:#101522;
+    border:1px solid #20283a;
+    border-radius:14px;
+    padding:18px;
+    transition:.2s;
+}
+
+.action:hover{
+    transform:translateY(-3px);
+    border-color:#57458a;
+}
+
+.action-icon{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    background:#1d1935;
+    color:#a78aff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    margin-bottom:13px;
+}
+
+.action strong{
+    display:block;
+    font-size:12px;
+}
+
+.action span{
+    display:block;
+    color:#68748a;
+    font-size:10px;
+    margin-top:5px;
+}
+
+/* TABLE */
+
+.table-card{
+    background:#101522;
+    border:1px solid #20283a;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    text-align:left;
+    color:#667187;
+    font-size:10px;
+    padding:15px 18px;
+    border-bottom:1px solid #20283a;
+}
+
+td{
+    padding:17px 18px;
+    font-size:11px;
+    color:#c8ced9;
+    border-bottom:1px solid #191f2d;
+}
+
+tr:last-child td{
+    border-bottom:none;
+}
+
+.event-name{
+    color:white;
+    font-weight:bold;
+}
+
+.muted{
+    color:#717c91;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:9px;
+    font-weight:bold;
+}
+
+.active-badge{
+    background:#123126;
+    color:#61d9a1;
+}
+
+.used-badge{
+    background:#241d42;
+    color:#b29aff;
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .actions{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        width:75px;
+    }
+
+    .logo h1,
+    .logo p,
+    .menu-title,
+    .nav a span:last-child,
+    .admin-box,
+    .logout span:last-child{
+        display:none;
+    }
+
+    .logo{
+        justify-content:center;
+    }
+
+    .nav a{
+        justify-content:center;
+    }
+
+    .main{
+        margin-left:75px;
+        width:calc(100% - 75px);
+        padding:22px;
+    }
+
+    .stats,
+    .actions{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-box">F</div>
+
+        <div>
+            <h1>FestPass</h1>
+            <p>EVENT MANAGEMENT</p>
+        </div>
+
+    </div>
+
+    <div class="menu-title">
+        MAIN MENU
+    </div>
+
+    <nav class="nav">
+
+        <!-- IMPORTANT: DIRECT ROOT LINKS -->
+
+        <a href="/dashboard.html" class="active">
+            <span class="icon">⌂</span>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="/events.html">
+            <span class="icon">◫</span>
+            <span>Events</span>
+        </a>
+
+        <a href="/attendees.html">
+            <span class="icon">♙</span>
+            <span>Attendees</span>
+        </a>
+
+        <a href="/tickets.html">
+            <span class="icon">▣</span>
+            <span>Tickets</span>
+        </a>
+
+        <a href="/qr-checkin.html">
+            <span class="icon">⌗</span>
+            <span>QR Check-in</span>
+        </a>
+
+        <a href="/reports.html">
+            <span class="icon">▤</span>
+            <span>Reports</span>
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="admin-box">
+            <strong>Administrator</strong>
+            <p>FestPass Admin</p>
+        </div>
+
+        <a href="/" class="logout">
+            <span>↪</span>
+            <span>Logout</span>
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+    <div class="topbar">
+
+        <div class="heading">
+
+            <h2>Dashboard</h2>
+
+            <p>
+                Welcome back, Administrator. Here's your event overview.
+            </p>
+
+        </div>
+
+
+        <div class="profile">
+
+            <div class="avatar">
+                A
+            </div>
+
+            <div class="profile-text">
+
+                <strong>Administrator</strong>
+
+                <span>
+                    Event Admin
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= STATS ================= -->
+
+    <div class="stats">
+
+        <div class="card stat-card">
+
+            <div class="stat-info">
+
+                <p>TOTAL EVENTS</p>
+
+                <h3 id="totalEvents">
+                    0
+                </h3>
+
+            </div>
+
+            <div class="stat-icon">
+                ◫
+            </div>
+
+        </div>
+
+
+        <div class="card stat-card">
+
+            <div class="stat-info">
+
+                <p>TOTAL ATTENDEES</p>
+
+                <h3 id="totalAttendees">
+                    0
+                </h3>
+
+            </div>
+
+            <div class="stat-icon">
+                ♙
+            </div>
+
+        </div>
+
+
+        <div class="card stat-card">
+
+            <div class="stat-info">
+
+                <p>TICKETS ISSUED</p>
+
+                <h3 id="totalTickets">
+                    0
+                </h3>
+
+            </div>
+
+            <div class="stat-icon">
+                ▣
+            </div>
+
+        </div>
+
+
+        <div class="card stat-card">
+
+            <div class="stat-info">
+
+                <p>CHECK-INS</p>
+
+                <h3 id="totalCheckins">
+                    0
+                </h3>
+
+            </div>
+
+            <div class="stat-icon">
+                ⌗
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+
+    <div class="section">
+
+        <div class="section-head">
+
+            <div>
+
+                <h3>
+                    Quick Actions
+                </h3>
+
+                <p>
+                    Manage your fest from here
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="actions">
+
+
+            <a href="/events.html" class="action">
+
+                <div class="action-icon">
+                    +
+                </div>
+
+                <strong>
+                    Create Event
+                </strong>
+
+                <span>
+                    Add and manage events
+                </span>
+
+            </a>
+
+
+            <a href="/attendees.html" class="action">
+
+                <div class="action-icon">
+                    ♙
+                </div>
+
+                <strong>
+                    Add Attendee
+                </strong>
+
+                <span>
+                    Register participants
+                </span>
+
+            </a>
+
+
+            <a href="/tickets.html" class="action">
+
+                <div class="action-icon">
+                    ▣
+                </div>
+
+                <strong>
+                    Generate Ticket
+                </strong>
+
+                <span>
+                    Create event tickets
+                </span>
+
+            </a>
+
+
+            <a href="/qr-checkin.html" class="action">
+
+                <div class="action-icon">
+                    ⌗
+                </div>
+
+                <strong>
+                    QR Check-in
+                </strong>
+
+                <span>
+                    Verify attendee tickets
+                </span>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= EVENTS ================= -->
+
+    <div class="section">
+
+        <div class="section-head">
+
+            <div>
+
+                <h3>
+                    Upcoming Events
+                </h3>
+
+                <p>
+                    Your latest registered events
+                </p>
+
+            </div>
+
+            <a href="/events.html" class="view">
+                View all →
+            </a>
+
+        </div>
+
+
+        <div class="table-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>EVENT</th>
+
+                        <th>DATE</th>
+
+                        <th>VENUE</th>
+
+                        <th>CAPACITY</th>
+
+                        <th>AVAILABLE</th>
+
+                        <th>STATUS</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="eventsTable">
+
+                    <tr>
+
+                        <td colspan="6" class="muted">
+                            Loading events...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= RECENT TICKETS ================= -->
+
+    <div class="section">
+
+        <div class="section-head">
+
+            <div>
+
+                <h3>
+                    Recent Tickets
+                </h3>
+
+                <p>
+                    Latest ticket activity
+                </p>
+
+            </div>
+
+            <a href="/tickets.html" class="view">
+                View all →
+            </a>
+
+        </div>
+
+
+        <div class="table-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>TICKET</th>
+
+                        <th>ATTENDEE</th>
+
+                        <th>EVENT</th>
+
+                        <th>STATUS</th>
+
+                        <th>ISSUED</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="ticketsTable">
+
+                    <tr>
+
+                        <td colspan="5" class="muted">
+                            Loading tickets...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
+
+</div>
+
+
+<script>
+
+const API = "http://localhost:8080/api";
+
+
+async function loadDashboard(){
+
+    try{
+
+        const responses = await Promise.all([
+
+            fetch(API + "/events"),
+
+            fetch(API + "/attendees"),
+
+            fetch(API + "/tickets")
+
+        ]);
+
+
+        const events = await responses[0].json();
+
+        const attendees = await responses[1].json();
+
+        const tickets = await responses[2].json();
+
+
+        /* STATS */
+
+        document.getElementById("totalEvents").textContent =
+            events.length;
+
+        document.getElementById("totalAttendees").textContent =
+            attendees.length;
+
+        document.getElementById("totalTickets").textContent =
+            tickets.length;
+
+
+        const checkins = tickets.filter(function(ticket){
+
+            return ticket.status &&
+                   ticket.status.toUpperCase() === "USED";
+
+        });
+
+
+        document.getElementById("totalCheckins").textContent =
+            checkins.length;
+
+
+        /* EVENTS */
+
+        const eventsTable =
+            document.getElementById("eventsTable");
+
+
+        if(events.length === 0){
+
+            eventsTable.innerHTML = `
+                <tr>
+                    <td colspan="6" class="muted">
+                        No events available.
+                    </td>
+                </tr>
+            `;
+
+        }else{
+
+            eventsTable.innerHTML = "";
+
+            events.slice(0,5).forEach(function(event){
+
+                let date = "-";
+
+                if(event.eventDate){
+
+                    date = new Date(
+                        event.eventDate
+                    ).toLocaleString();
+
+                }
+
+
+                eventsTable.innerHTML += `
+
+                    <tr>
+
+                        <td class="event-name">
+                            ${event.eventName || "-"}
+                        </td>
+
+                        <td class="muted">
+                            ${date}
+                        </td>
+
+                        <td>
+                            ${event.venue || "-"}
+                        </td>
+
+                        <td>
+                            ${event.capacity ?? "-"}
+                        </td>
+
+                        <td>
+                            ${event.availableTickets ?? "-"}
+                        </td>
+
+                        <td>
+
+                            <span class="badge active-badge">
+
+                                ${
+                                    event.active
+                                    ? "ACTIVE"
+                                    : "INACTIVE"
+                                }
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+        }
+
+
+        /* TICKETS */
+
+        const ticketsTable =
+            document.getElementById("ticketsTable");
+
+
+        if(tickets.length === 0){
+
+            ticketsTable.innerHTML = `
+                <tr>
+                    <td colspan="5" class="muted">
+                        No tickets generated yet.
+                    </td>
+                </tr>
+            `;
+
+        }else{
+
+            ticketsTable.innerHTML = "";
+
+            tickets.slice(-5).reverse().forEach(function(ticket){
+
+                const attendee =
+                    ticket.attendee
+                    ? ticket.attendee.name
+                    : "-";
+
+
+                const event =
+                    ticket.event
+                    ? ticket.event.eventName
+                    : "-";
+
+
+                const issued =
+                    ticket.issuedAt
+                    ? new Date(
+                        ticket.issuedAt
+                      ).toLocaleString()
+                    : "-";
+
+
+                const status =
+                    ticket.status || "ACTIVE";
+
+
+                const badgeClass =
+                    status.toUpperCase() === "USED"
+                    ? "used-badge"
+                    : "active-badge";
+
+
+                ticketsTable.innerHTML += `
+
+                    <tr>
+
+                        <td class="event-name">
+                            ${ticket.ticketNumber || "-"}
+                        </td>
+
+                        <td>
+                            ${attendee}
+                        </td>
+
+                        <td>
+                            ${event}
+                        </td>
+
+                        <td>
+
+                            <span class="badge ${badgeClass}">
+                                ${status}
+                            </span>
+
+                        </td>
+
+                        <td class="muted">
+                            ${issued}
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Dashboard Error:",
+            error
+        );
+
+    }
+
+}
+
+
+loadDashboard();
+
+</script>
+
+</body>
+</html>

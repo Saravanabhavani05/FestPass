@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FestPass - Reports</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#080b14;
+    color:white;
+}
+
+.layout{display:flex;min-height:100vh}
+
+.sidebar{
+    width:245px;
+    height:100vh;
+    position:fixed;
+    background:#0d111d;
+    border-right:1px solid #20283a;
+    padding:28px 18px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:42px;
+    padding:0 10px;
+}
+
+.logo-box{
+    width:40px;height:40px;border-radius:12px;
+    background:linear-gradient(135deg,#6846ff,#a66cff);
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;font-weight:bold;
+}
+
+.logo h1{font-size:21px}
+.logo p{font-size:9px;color:#707a90;margin-top:3px}
+
+.menu-title{
+    color:#596378;
+    font-size:10px;
+    font-weight:bold;
+    letter-spacing:1px;
+    margin:0 12px 12px;
+}
+
+.nav{display:flex;flex-direction:column;gap:6px}
+
+.nav a{
+    text-decoration:none;
+    color:#8992a7;
+    padding:12px 14px;
+    border-radius:10px;
+    display:flex;
+    gap:13px;
+    align-items:center;
+    font-size:13px;
+}
+
+.nav a:hover{background:#171d2c;color:white}
+
+.nav a.active{
+    background:linear-gradient(90deg,#282044,#181c2c);
+    color:#aa8cff;
+    border:1px solid #3b3068;
+}
+
+.icon{width:20px;text-align:center}
+
+.sidebar-bottom{
+    position:absolute;
+    bottom:24px;
+    left:18px;
+    right:18px;
+}
+
+.admin-box{
+    background:#111827;
+    border:1px solid #252e42;
+    border-radius:12px;
+    padding:13px;
+    margin-bottom:10px;
+}
+
+.admin-box strong{font-size:12px}
+.admin-box p{color:#68748a;font-size:10px;margin-top:4px}
+
+.logout{
+    color:#7c869b;
+    text-decoration:none;
+    font-size:12px;
+    display:flex;
+    gap:10px;
+    padding:10px 12px;
+}
+
+.main{
+    margin-left:245px;
+    width:calc(100% - 245px);
+    padding:34px 45px;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.header h2{font-size:28px}
+.header p{color:#707b91;font-size:13px;margin-top:6px}
+
+.profile{display:flex;align-items:center;gap:12px}
+
+.avatar{
+    width:40px;height:40px;border-radius:50%;
+    background:linear-gradient(135deg,#7354ff,#a86cff);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:bold;
+}
+
+.profile span{display:block;color:#68748a;font-size:10px;margin-top:3px}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:30px;
+}
+
+.card{
+    background:#101522;
+    border:1px solid #20283a;
+    border-radius:15px;
+    padding:20px;
+}
+
+.stat{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    min-height:115px;
+}
+
+.stat p{
+    color:#727d92;
+    font-size:10px;
+    margin-bottom:8px;
+}
+
+.stat h3{font-size:28px}
+
+.stat-icon{
+    width:44px;height:44px;
+    border-radius:12px;
+    background:#1d1935;
+    color:#a78aff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
+}
+
+.section{margin-top:28px}
+
+.section-title{
+    margin-bottom:14px;
+}
+
+.section-title h3{font-size:16px}
+
+.section-title p{
+    color:#68748a;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.table-card{
+    background:#101522;
+    border:1px solid #20283a;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    text-align:left;
+    color:#667187;
+    font-size:10px;
+    padding:15px 18px;
+    border-bottom:1px solid #20283a;
+}
+
+td{
+    padding:17px 18px;
+    font-size:11px;
+    color:#c8ced9;
+    border-bottom:1px solid #191f2d;
+}
+
+tr:last-child td{border-bottom:none}
+
+.badge{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:9px;
+    font-weight:bold;
+}
+
+.green{
+    background:#123126;
+    color:#61d9a1;
+}
+
+.purple{
+    background:#241d42;
+    color:#b29aff;
+}
+
+.muted{color:#717c91}
+
+@media(max-width:1000px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+
+    <div class="logo">
+        <div class="logo-box">F</div>
+        <div>
+            <h1>FestPass</h1>
+            <p>EVENT MANAGEMENT</p>
+        </div>
+    </div>
+
+    <div class="menu-title">MAIN MENU</div>
+
+    <nav class="nav">
+
+        <a href="/dashboard.html">
+            <span class="icon">⌂</span>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="/events.html">
+            <span class="icon">◫</span>
+            <span>Events</span>
+        </a>
+
+        <a href="/attendees.html">
+            <span class="icon">♙</span>
+            <span>Attendees</span>
+        </a>
+
+        <a href="/tickets.html">
+            <span class="icon">▣</span>
+            <span>Tickets</span>
+        </a>
+
+        <a href="/qr-checkin.html">
+            <span class="icon">⌗</span>
+            <span>QR Check-in</span>
+        </a>
+
+        <a href="/reports.html" class="active">
+            <span class="icon">▤</span>
+            <span>Reports</span>
+        </a>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <div class="admin-box">
+            <strong>Administrator</strong>
+            <p>FestPass Admin</p>
+        </div>
+
+        <a href="/" class="logout">
+            ↪ <span>Logout</span>
+        </a>
+
+    </div>
+
+</aside>
+
+
+<main class="main">
+
+    <div class="header">
+
+        <div>
+            <h2>Reports</h2>
+            <p>Overview of your FestPass event activity</p>
+        </div>
+
+        <div class="profile">
+            <div class="avatar">A</div>
+            <div>
+                <strong>Administrator</strong>
+                <span>Event Admin</span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="card stat">
+            <div>
+                <p>TOTAL EVENTS</p>
+                <h3 id="eventsCount">0</h3>
+            </div>
+            <div class="stat-icon">◫</div>
+        </div>
+
+        <div class="card stat">
+            <div>
+                <p>TOTAL ATTENDEES</p>
+                <h3 id="attendeesCount">0</h3>
+            </div>
+            <div class="stat-icon">♙</div>
+        </div>
+
+        <div class="card stat">
+            <div>
+                <p>TICKETS ISSUED</p>
+                <h3 id="ticketsCount">0</h3>
+            </div>
+            <div class="stat-icon">▣</div>
+        </div>
+
+        <div class="card stat">
+            <div>
+                <p>TOTAL CHECK-INS</p>
+                <h3 id="checkinsCount">0</h3>
+            </div>
+            <div class="stat-icon">⌗</div>
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="section-title">
+            <h3>Event-wise Report</h3>
+            <p>Ticket and availability summary</p>
+        </div>
+
+        <div class="table-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>EVENT</th>
+                        <th>VENUE</th>
+                        <th>CAPACITY</th>
+                        <th>AVAILABLE</th>
+                        <th>STATUS</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="eventReport">
+
+                    <tr>
+                        <td colspan="5" class="muted">
+                            Loading report...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="section-title">
+            <h3>Recent Check-ins</h3>
+            <p>Recently verified tickets</p>
+        </div>
+
+        <div class="table-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>TICKET</th>
+                        <th>ATTENDEE</th>
+                        <th>EVENT</th>
+                        <th>STATUS</th>
+                        <th>CHECKED IN</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="checkinReport">
+
+                    <tr>
+                        <td colspan="5" class="muted">
+                            Loading check-ins...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
+
+</div>
+
+
+<script>
+
+async function loadReports(){
+
+    try{
+
+        const [
+            eventsResponse,
+            attendeesResponse,
+            ticketsResponse
+        ] = await Promise.all([
+
+            fetch("http://localhost:8080/api/events"),
+
+            fetch("http://localhost:8080/api/attendees"),
+
+            fetch("http://localhost:8080/api/tickets")
+
+        ]);
+
+
+        const events = await eventsResponse.json();
+        const attendees = await attendeesResponse.json();
+        const tickets = await ticketsResponse.json();
+
+
+        document.getElementById("eventsCount").textContent =
+            events.length;
+
+        document.getElementById("attendeesCount").textContent =
+            attendees.length;
+
+        document.getElementById("ticketsCount").textContent =
+            tickets.length;
+
+
+        const checkins = tickets.filter(function(ticket){
+
+            return ticket.status &&
+                   ticket.status.toUpperCase() === "USED";
+
+        });
+
+
+        document.getElementById("checkinsCount").textContent =
+            checkins.length;
+
+
+        /* EVENT REPORT */
+
+        const eventReport =
+            document.getElementById("eventReport");
+
+
+        if(events.length === 0){
+
+            eventReport.innerHTML = `
+                <tr>
+                    <td colspan="5" class="muted">
+                        No events available.
+                    </td>
+                </tr>
+            `;
+
+        }else{
+
+            eventReport.innerHTML = "";
+
+            events.forEach(function(event){
+
+                eventReport.innerHTML += `
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                ${event.eventName || "-"}
+                            </strong>
+                        </td>
+
+                        <td>
+                            ${event.venue || "-"}
+                        </td>
+
+                        <td>
+                            ${event.capacity ?? "-"}
+                        </td>
+
+                        <td>
+                            ${event.availableTickets ?? "-"}
+                        </td>
+
+                        <td>
+                            <span class="badge green">
+                                ${event.active ? "ACTIVE" : "INACTIVE"}
+                            </span>
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+        }
+
+
+        /* CHECK-IN REPORT */
+
+        const checkinReport =
+            document.getElementById("checkinReport");
+
+
+        if(checkins.length === 0){
+
+            checkinReport.innerHTML = `
+                <tr>
+                    <td colspan="5" class="muted">
+                        No check-ins yet.
+                    </td>
+                </tr>
+            `;
+
+        }else{
+
+            checkinReport.innerHTML = "";
+
+            checkins.slice(-10).reverse().forEach(function(ticket){
+
+                const attendee =
+                    ticket.attendee
+                    ? ticket.attendee.name
+                    : "-";
+
+
+                const event =
+                    ticket.event
+                    ? ticket.event.eventName
+                    : "-";
+
+
+                const checked =
+                    ticket.checkedInAt
+                    ? new Date(ticket.checkedInAt).toLocaleString()
+                    : "-";
+
+
+                checkinReport.innerHTML += `
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                ${ticket.ticketNumber || "-"}
+                            </strong>
+                        </td>
+
+                        <td>
+                            ${attendee}
+                        </td>
+
+                        <td>
+                            ${event}
+                        </td>
+
+                        <td>
+                            <span class="badge purple">
+                                ${ticket.status}
+                            </span>
+                        </td>
+
+                        <td class="muted">
+                            ${checked}
+                        </td>
+
+                    </tr>
+
+                `;
+
+            });
+
+        }
+
+    }
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+loadReports();
+
+</script>
+
+</body>
+</html>

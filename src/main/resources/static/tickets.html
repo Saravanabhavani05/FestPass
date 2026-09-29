@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FestPass | Tickets</title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <!-- QR CODE LIBRARY -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
+    </script>
+
+</head>
+
+
+<body>
+
+<div class="dashboard-page">
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="sidebar-brand-icon">
+                🎟
+            </div>
+
+            <div>
+
+                <h2>FestPass</h2>
+
+                <p>Fest Management</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- MENU -->
+
+        <nav class="sidebar-menu">
+
+            <a href="dashboard.html">
+
+                <span>▦</span>
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="events.html">
+
+                <span>◫</span>
+                <span>Events</span>
+
+            </a>
+
+
+            <a href="attendees.html">
+
+                <span>♙</span>
+                <span>Attendees</span>
+
+            </a>
+
+
+            <a href="tickets.html"
+               class="active">
+
+                <span>🎟</span>
+                <span>Tickets</span>
+
+            </a>
+
+
+            <a href="#">
+
+                <span>▣</span>
+                <span>QR Check-in</span>
+
+            </a>
+
+
+            <a href="#">
+
+                <span>◈</span>
+                <span>Reports</span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-admin">
+
+                <strong>Admin</strong>
+
+                <span>
+                    Fest Coordinator
+                </span>
+
+            </div>
+
+
+            <a href="index.html"
+               class="sidebar-logout">
+
+                <span>↪</span>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div class="page-title">
+
+                <h1>Tickets</h1>
+
+                <p>
+                    Generate and manage digital fest tickets
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="admin-info">
+
+                    <strong>Admin</strong>
+
+                    <span>
+                        Fest Coordinator
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             GENERATE TICKET
+             ================================================= -->
+
+        <section class="dashboard-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h3>
+                        Generate Ticket
+                    </h3>
+
+                    <p>
+                        Create a digital ticket for an attendee
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                <form id="ticketForm">
+
+
+                    <!-- EVENT -->
+
+                    <div style="margin-bottom:18px;">
+
+                        <label style="
+                            display:block;
+                            color:#9ba4b7;
+                            font-size:11px;
+                            margin-bottom:8px;
+                        ">
+
+                            Select Event
+
+                        </label>
+
+
+                        <select
+                            id="eventSelect"
+                            required
+                            style="
+                            width:100%;
+                            padding:12px;
+                            box-sizing:border-box;
+                            background:#171e30;
+                            color:#ffffff;
+                            border:1px solid #30394d;
+                            border-radius:8px;
+                            ">
+
+                            <option value="">
+                                Loading events...
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- ATTENDEE -->
+
+                    <div style="margin-bottom:18px;">
+
+                        <label style="
+                            display:block;
+                            color:#9ba4b7;
+                            font-size:11px;
+                            margin-bottom:8px;
+                        ">
+
+                            Select Attendee
+
+                        </label>
+
+
+                        <select
+                            id="attendeeSelect"
+                            required
+                            style="
+                            width:100%;
+                            padding:12px;
+                            box-sizing:border-box;
+                            background:#171e30;
+                            color:#ffffff;
+                            border:1px solid #30394d;
+                            border-radius:8px;
+                            ">
+
+                            <option value="">
+                                Loading attendees...
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <button
+                        type="submit"
+                        class="login-btn">
+
+                        Generate Ticket
+
+                    </button>
+
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             TICKET RESULT
+             ================================================= -->
+
+        <section
+            class="dashboard-card"
+            id="ticketResultCard"
+            style="
+                display:none;
+                margin-top:22px;
+            ">
+
+
+            <div class="card-header">
+
+                <div>
+
+                    <h3>
+                        Ticket Generated
+                    </h3>
+
+                    <p>
+                        Digital pass created successfully
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                <div style="
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:20px;
+                ">
+
+
+                    <!-- TICKET NUMBER -->
+
+                    <div>
+
+                        <div style="
+                            color:#687287;
+                            font-size:10px;
+                            margin-bottom:6px;
+                        ">
+
+                            TICKET NUMBER
+
+                        </div>
+
+
+                        <div
+                            id="resultTicketNumber"
+                            style="
+                            color:#ffffff;
+                            font-size:20px;
+                            font-weight:700;
+                        ">
+
+                            -
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- STATUS -->
+
+                    <div>
+
+                        <div style="
+                            color:#687287;
+                            font-size:10px;
+                            margin-bottom:6px;
+                        ">
+
+                            STATUS
+
+                        </div>
+
+
+                        <div
+                            id="resultStatus"
+                            style="
+                            color:#7ee2a8;
+                            font-size:13px;
+                            font-weight:600;
+                        ">
+
+                            ACTIVE
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ATTENDEE -->
+
+                    <div>
+
+                        <div style="
+                            color:#687287;
+                            font-size:10px;
+                            margin-bottom:6px;
+                        ">
+
+                            ATTENDEE
+
+                        </div>
+
+
+                        <div
+                            id="resultAttendee"
+                            style="
+                            color:#ffffff;
+                            font-size:13px;
+                        ">
+
+                            -
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- EVENT -->
+
+                    <div>
+
+                        <div style="
+                            color:#687287;
+                            font-size:10px;
+                            margin-bottom:6px;
+                        ">
+
+                            EVENT
+
+                        </div>
+
+
+                        <div
+                            id="resultEvent"
+                            style="
+                            color:#ffffff;
+                            font-size:13px;
+                        ">
+
+                            -
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         ACTUAL QR CODE
+                         ================================================= -->
+
+                    <div style="
+                        grid-column:1 / -1;
+                        text-align:center;
+                        margin-top:15px;
+                    ">
+
+
+                        <div style="
+                            color:#687287;
+                            font-size:10px;
+                            margin-bottom:12px;
+                        ">
+
+                            QR CODE
+
+                        </div>
+
+
+
+                        <!-- QR CONTAINER -->
+
+                        <div
+                            id="qrCode"
+                            style="
+                            display:inline-flex;
+                            align-items:center;
+                            justify-content:center;
+                            padding:14px;
+                            background:#ffffff;
+                            border-radius:12px;
+                            min-width:180px;
+                            min-height:180px;
+                            box-sizing:border-box;
+                        ">
+
+                            QR will appear here
+
+                        </div>
+
+
+
+                        <!-- QR TOKEN -->
+
+                        <div
+                            id="resultQrToken"
+                            style="
+                            color:#687287;
+                            font-size:9px;
+                            margin-top:12px;
+                            word-break:break-all;
+                        ">
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ALL TICKETS
+             ================================================= -->
+
+        <section
+            class="dashboard-card"
+            style="margin-top:22px;">
+
+
+            <div class="card-header">
+
+                <div>
+
+                    <h3>
+                        Generated Tickets
+                    </h3>
+
+                    <p>
+                        View all issued tickets
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                <div style="overflow-x:auto;">
+
+
+                    <table style="
+                        width:100%;
+                        border-collapse:collapse;
+                    ">
+
+
+                        <thead>
+
+                            <tr>
+
+
+                                <th style="
+                                    text-align:left;
+                                    padding:14px;
+                                    color:#687287;
+                                    font-size:11px;
+                                ">
+
+                                    Ticket
+
+                                </th>
+
+
+
+                                <th style="
+                                    text-align:left;
+                                    padding:14px;
+                                    color:#687287;
+                                    font-size:11px;
+                                ">
+
+                                    Attendee
+
+                                </th>
+
+
+
+                                <th style="
+                                    text-align:left;
+                                    padding:14px;
+                                    color:#687287;
+                                    font-size:11px;
+                                ">
+
+                                    Event
+
+                                </th>
+
+
+
+                                <th style="
+                                    text-align:left;
+                                    padding:14px;
+                                    color:#687287;
+                                    font-size:11px;
+                                ">
+
+                                    Status
+
+                                </th>
+
+
+
+                                <th style="
+                                    text-align:left;
+                                    padding:14px;
+                                    color:#687287;
+                                    font-size:11px;
+                                ">
+
+                                    Issued At
+
+                                </th>
+
+
+                            </tr>
+
+                        </thead>
+
+
+
+                        <tbody id="ticketTableBody">
+
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   LOAD EVENTS
+   ===================================================== */
+
+async function loadEvents() {
+
+    try {
+
+        const response =
+            await fetch("/api/events");
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load events"
+            );
+
+        }
+
+
+        const events =
+            await response.json();
+
+
+        const select =
+            document.getElementById(
+                "eventSelect"
+            );
+
+
+        select.innerHTML = `
+
+            <option value="">
+                Select an event
+            </option>
+
+        `;
+
+
+        if (events.length === 0) {
+
+            select.innerHTML = `
+
+                <option value="">
+                    No events available
+                </option>
+
+            `;
+
+            return;
+
+        }
+
+
+        events.forEach(function(event) {
+
+
+            const option =
+                document.createElement("option");
+
+
+            option.value =
+                event.id;
+
+
+            option.textContent =
+                `${event.eventName} — ${event.venue}`;
+
+
+            select.appendChild(option);
+
+        });
+
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+
+        document.getElementById(
+            "eventSelect"
+        ).innerHTML = `
+
+            <option value="">
+                Unable to load events
+            </option>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   LOAD ATTENDEES
+   ===================================================== */
+
+async function loadAttendees() {
+
+    try {
+
+        const response =
+            await fetch("/api/attendees");
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load attendees"
+            );
+
+        }
+
+
+        const attendees =
+            await response.json();
+
+
+        const select =
+            document.getElementById(
+                "attendeeSelect"
+            );
+
+
+        select.innerHTML = `
+
+            <option value="">
+                Select an attendee
+            </option>
+
+        `;
+
+
+        if (attendees.length === 0) {
+
+            select.innerHTML = `
+
+                <option value="">
+                    No attendees available
+                </option>
+
+            `;
+
+            return;
+
+        }
+
+
+        attendees.forEach(function(attendee) {
+
+
+            const option =
+                document.createElement("option");
+
+
+            option.value =
+                attendee.id;
+
+
+            option.textContent =
+                `${attendee.name} — ${attendee.email}`;
+
+
+            select.appendChild(option);
+
+        });
+
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+
+        document.getElementById(
+            "attendeeSelect"
+        ).innerHTML = `
+
+            <option value="">
+                Unable to load attendees
+            </option>
+
+        `;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   GENERATE TICKET
+   ===================================================== */
+
+document.getElementById(
+    "ticketForm"
+).addEventListener(
+    "submit",
+    async function(event) {
+
+
+        event.preventDefault();
+
+
+        const eventId =
+            document.getElementById(
+                "eventSelect"
+            ).value;
+
+
+        const attendeeId =
+            document.getElementById(
+                "attendeeSelect"
+            ).value;
+
+
+
+        if (
+            eventId === "" ||
+            attendeeId === ""
+        ) {
+
+            alert(
+                "Please select an event and attendee."
+            );
+
+            return;
+
+        }
+
+
+
+        try {
+
+
+            const response =
+                await fetch(
+                    `/api/tickets/generate?eventId=${eventId}&attendeeId=${attendeeId}`,
+                    {
+                        method: "POST"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to generate ticket"
+                );
+
+            }
+
+
+            const ticket =
+                await response.json();
+
+
+
+            /* ==========================================
+               SHOW RESULT CARD
+               ========================================== */
+
+            document.getElementById(
+                "ticketResultCard"
+            ).style.display =
+                "block";
+
+
+
+            /* ==========================================
+               TICKET NUMBER
+               ========================================== */
+
+            document.getElementById(
+                "resultTicketNumber"
+            ).textContent =
+                ticket.ticketNumber;
+
+
+
+            /* ==========================================
+               STATUS
+               ========================================== */
+
+            document.getElementById(
+                "resultStatus"
+            ).textContent =
+                ticket.status;
+
+
+
+            /* ==========================================
+               ATTENDEE
+               ========================================== */
+
+            document.getElementById(
+                "resultAttendee"
+            ).textContent =
+                ticket.attendee.name;
+
+
+
+            /* ==========================================
+               EVENT
+               ========================================== */
+
+            document.getElementById(
+                "resultEvent"
+            ).textContent =
+                ticket.event.eventName;
+
+
+
+            /* ==========================================
+               CREATE ACTUAL QR
+               ========================================== */
+
+            const qrContainer =
+                document.getElementById(
+                    "qrCode"
+                );
+
+
+            qrContainer.innerHTML = "";
+
+
+            new QRCode(
+                qrContainer,
+                {
+
+                    text:
+                        ticket.qrToken,
+
+                    width:
+                        180,
+
+                    height:
+                        180,
+
+                    colorDark:
+                        "#000000",
+
+                    colorLight:
+                        "#ffffff",
+
+                    correctLevel:
+                        QRCode.CorrectLevel.H
+
+                }
+            );
+
+
+
+            /* ==========================================
+               SHOW QR TOKEN
+               ========================================== */
+
+            document.getElementById(
+                "resultQrToken"
+            ).textContent =
+                ticket.qrToken;
+
+
+
+            /* ==========================================
+               SUCCESS MESSAGE
+               ========================================== */
+
+            alert(
+                "Ticket generated successfully!"
+            );
+
+
+
+            /* ==========================================
+               REFRESH TICKET TABLE
+               ========================================== */
+
+            loadTickets();
+
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+
+            alert(
+                "Unable to generate ticket. Check ticket availability."
+            );
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   LOAD ALL TICKETS
+   ===================================================== */
+
+async function loadTickets() {
+
+    try {
+
+
+        const response =
+            await fetch("/api/tickets");
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Unable to load tickets"
+            );
+
+        }
+
+
+        const tickets =
+            await response.json();
+
+
+        const tableBody =
+            document.getElementById(
+                "ticketTableBody"
+            );
+
+
+        tableBody.innerHTML = "";
+
+
+
+        /* NO TICKETS */
+
+        if (tickets.length === 0) {
+
+            tableBody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        style="
+                        text-align:center;
+                        padding:30px;
+                        color:#687287;
+                        ">
+
+                        No tickets generated yet.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+
+        /* DISPLAY TICKETS */
+
+        tickets.forEach(function(ticket) {
+
+
+            const row =
+                document.createElement("tr");
+
+
+            let statusColor =
+                "#7ee2a8";
+
+
+            if (
+                ticket.status === "USED"
+            ) {
+
+                statusColor =
+                    "#8fb4ff";
+
+            }
+
+
+            if (
+                ticket.status === "CANCELLED"
+            ) {
+
+                statusColor =
+                    "#ff8fa3";
+
+            }
+
+
+
+            const issuedDate =
+                ticket.issuedAt
+                ? new Date(
+                    ticket.issuedAt
+                ).toLocaleString()
+                : "-";
+
+
+
+            row.innerHTML = `
+
+                <td style="
+                    padding:14px;
+                    color:#ffffff;
+                    font-weight:600;
+                ">
+
+                    ${escapeHtml(
+                        ticket.ticketNumber
+                    )}
+
+                </td>
+
+
+                <td style="
+                    padding:14px;
+                    color:#9ba4b7;
+                ">
+
+                    ${escapeHtml(
+                        ticket.attendee.name
+                    )}
+
+                </td>
+
+
+                <td style="
+                    padding:14px;
+                    color:#9ba4b7;
+                ">
+
+                    ${escapeHtml(
+                        ticket.event.eventName
+                    )}
+
+                </td>
+
+
+                <td style="
+                    padding:14px;
+                    color:${statusColor};
+                    font-weight:600;
+                ">
+
+                    ${escapeHtml(
+                        ticket.status
+                    )}
+
+                </td>
+
+
+                <td style="
+                    padding:14px;
+                    color:#687287;
+                ">
+
+                    ${escapeHtml(
+                        issuedDate
+                    )}
+
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        });
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unable to load tickets:",
+            error
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   HTML SAFETY
+   ===================================================== */
+
+function escapeHtml(value) {
+
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+
+/* =====================================================
+   PAGE LOAD
+   ===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        loadEvents();
+
+        loadAttendees();
+
+        loadTickets();
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
